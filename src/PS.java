@@ -1,15 +1,17 @@
 import java.util.ArrayList;
 
+
+
 public class PS {
 
     public static void calc(Process[] processes, int size){
-        //int[] priority = new int[size];
         int[] waitingTime = new int[size];
         int[] turnAroundTime = new int[size];
         int[] x = new int[size];
         ArrayList<String> o=new ArrayList<>();
         int smallest , count = 0 , time=0;
         float totalWait=0,totalTurn=0, end;
+        int lowPri=0,lowestInd=0,starCount=50,c=1;
 
         for (int i = 0 ; i < size;i++){
             x[i] = processes[i].burst;
@@ -29,6 +31,12 @@ public class PS {
                     s=processes[i].pName;
                 }
             }
+            for (int i=0;i<size;i++){
+                if(lowPri<processes[i].pri){
+                    lowPri=processes[i].pri;
+                    lowestInd=i;
+                }
+            }
             processes[smallest].burst--;
             if(!t.equals(s)){
                 o.add(s);
@@ -44,6 +52,10 @@ public class PS {
                 totalTurn=turnAroundTime[smallest];
             }
            time++;
+            if((time/c)==starCount){
+                processes[lowestInd].pri--;
+                c++;
+            }
        }
         for (int i=0;i<o.size();i++){
             System.out.print(o.get(i)+"  ");
@@ -56,7 +68,7 @@ public class PS {
                 " Turn around time " );
         for (int i = 0 ; i < size ; i++){
             System.out.println(" " + processes[i].pName + "\t\t\t\t"
-                    + processes[i].burst + "\t\t\t\t " + waitingTime[i]
+                    + x[i] + "\t\t\t\t " + waitingTime[i]
                     + "\t\t\t\t" + turnAroundTime[i]);
         }
 
