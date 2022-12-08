@@ -3,17 +3,35 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner in=new Scanner(System.in);
-        Process p[]={new Process("p1",0,3),
-                new Process("p2",2,5),
-                new Process("p3",1,4),
-                new Process("p4",4,2),
-                new Process("p5",6,9),
-                new Process("p6",5,4),
-                new Process("p7",7,10),
-                };
-        RR.calc(p,p.length,2,0);
 
+//        Process p[]={new Process("p1",0,3),
+//                new Process("p2",2,5),
+//                new Process("p3",1,4),
+//                new Process("p4",4,2),
+//                new Process("p5",6,9),
+//                new Process("p6",5,4),
+//                new Process("p7",7,10),
+//                };
+//        RR.calc(p,p.length,2,0);
 
+//        Process p[]={new Process("p1",0,3),
+//                new Process("p2",2,5),
+//                new Process("p3",1,4),
+//                new Process("p4",4,2),
+//                new Process("p5",6,9),
+//                new Process("p6",5,4),
+//                new Process("p7",7,10)};
+//        RR.calc(p,p.length,2,0);
+                //int number_of_processes = in.nextInt();
+
+                Process p[]={new Process("p1",0,1 , 2),
+                             new Process("p2",1,7 , 6),
+                             new Process("p3",2,3 , 3),
+                             new Process("p4",3,6 , 5),
+                             new Process("p5",4,5 , 4),
+                             new Process("p6",5,15 , 10),
+                             new Process("p7",15,8 , 9)};
+                PS.calc(p , p.length);
 
 //        new Process("p1",0,4),
 //                new Process("p2",1,8),

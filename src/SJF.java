@@ -6,7 +6,7 @@ public class SJF {
         boolean flag=false;
         int et[]=new int[size];
         for (int i=0;i<size;i++){
-            et[i]=p[i].burst;
+            et[i] = p[i].burst;
         }
         while (completed <size){
             String s="";
