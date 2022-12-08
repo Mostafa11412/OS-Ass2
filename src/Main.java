@@ -9,12 +9,17 @@ public class Main {
                 new Process("p4",4,2),
                 new Process("p5",6,9),
                 new Process("p6",5,4),
-                new Process("p7",7,10)};
+                new Process("p7",7,10),
+                };
         RR.calc(p,p.length,2,0);
 
 
 
-
+//        new Process("p1",0,4),
+//                new Process("p2",1,8),
+//                new Process("p3",3,2),
+//                new Process("p4",10,6),
+//                new Process("p5",12,5),
 
 //        System.out.println("Enter number of process");
 //        int n= in.nextInt();

@@ -3,48 +3,79 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java. util. Arrays;
 
+import static java.lang.Math.max;
+
 public class RR {
-    public static void waitingTime(Process p[], int size , int waiting[], ArrayList<String> o,int quantam,int cost){
-        int current_time=0,mn=Integer.MAX_VALUE,low=0,completed=0,finish_time=0;
-        Deque<Integer> arrival = new ArrayDeque<>();
-        int arr[] = new int[size];
-        for (int i=0;i<size;i++){
-            arr[i]=p[i].arrival;
-        }
-        Arrays.sort(arr);
-        for (int i=0;i<size;i++){
-            arrival.push(arr[i]);
-        }
+    public static void waitingTime(Process p[], int size , int waiting[], ArrayList<String> o,int quantum,int cost){
+        int current_time=0,mn=Integer.MAX_VALUE,low=0,completed=0,finish_time=0,cost1=0;
         boolean flag=false;
         int remaining_exec_time[]=new int[size];
+        int arrival[]=new int[size];
         for (int i=0;i<size;i++){
             remaining_exec_time[i]=p[i].burst;
         }
-        while (completed <size){
-            String s="";
-            if(current_time <arr[0] )
-                flag=false;
 
+        for (int i=0;i<size;i++){
+            arrival[i]=p[i].arrival;
+        }
+        int mx=-1;
+        for (int i=0;i<size;i++){
+            mx=max(mx,p[i].arrival);
+        }
+        int mx1=mx;
+        while(completed<size)
+        {
+            String s="";
+            for (int i=0;i<size;i++){
+                if(arrival[i] <=current_time && remaining_exec_time[i]>0 &&arrival[i]<mn ){
+                    mn=arrival[i];
+                    low=i;
+                    flag=true;
+                    s=p[i].pName;
+                }
+            }
             if(!flag){
                 current_time++;
+                if(mx1!=mx)finish_time++;
                 continue;
             }
-//            if(s.length()>0) {
-//                o.add(s);
-//                if(remaining_exec_time[low]>1)current_time += cost;
-//
-//            }
-
-            if(remaining_exec_time[low] > quantam){
-                current_time+=quantam;
-                remaining_exec_time[low]-=quantam;
+            if(s.length()>0) {
+                o.add(s);
             }
-            else {
-                current_time+=remaining_exec_time[low];
-                waiting[low] = current_time -(p[low].burst + p[low].arrival); //
+            if(remaining_exec_time[low]>quantum){
+                current_time += quantum;
+                mx++;
+                int t=current_time,prc=0;
+                while (true){
+                    int c=0;
+                    for (int i=0;i<size;i++){
+                        if(arrival[i]<=t &&i !=low){
+                            c++;
+                        }
+                    }
+                    if(prc==c){
+                        break;
+                    }
+                    t+=quantum;
+                    prc=c;
+                }
+                arrival[low]=t;
+                cost1+=cost;
+                remaining_exec_time[low] -= quantum;
+                mn=Integer.MAX_VALUE;
+            }else{
+                current_time = current_time + remaining_exec_time[low];
+                cost1+=cost;
+                waiting[low] = (current_time-finish_time+cost1) - (p[low].burst+p[low].arrival);
                 completed++;
+                remaining_exec_time[low] = 0;
+                mn=Integer.MAX_VALUE;
             }
+            flag=false;
         }
+
+
+
     }
     public static void tat(Process p[],int size,int wt[],int tat[]){
         for (int i = 0; i < size; i++)
