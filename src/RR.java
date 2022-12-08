@@ -24,16 +24,17 @@ public class RR {
             String s="";
             if(current_time <arr[0] )
                 flag=false;
-            
+
             if(!flag){
                 current_time++;
                 continue;
             }
-            if(s.length()>0) {
-                o.add(s);
-                if(remaining_exec_time[low]>1)current_time += cost;
+//            if(s.length()>0) {
+//                o.add(s);
+//                if(remaining_exec_time[low]>1)current_time += cost;
+//
+//            }
 
-            }
             if(remaining_exec_time[low] > quantam){
                 current_time+=quantam;
                 remaining_exec_time[low]-=quantam;
