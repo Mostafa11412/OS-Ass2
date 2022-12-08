@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class SJF {
     public static void waitingTime(Process p[], int size , int w[], ArrayList<String> o,int cost){
-        int t=0,mn=Integer.MAX_VALUE,low=0,completed=0,finish_time=0,j=0;
+        int current_time=0,mn=Integer.MAX_VALUE,low=0,completed=0,finish_time=0,j=0;
         boolean flag=false;
         int et[]=new int[size];
         for (int i=0;i<size;i++){
@@ -11,7 +11,7 @@ public class SJF {
         while (completed <size){
             String s="";
             for (int i=0;i<size;i++){
-                if(p[i].arrival <=t && et[i]<mn &&et[i]>0 ){
+                if(p[i].arrival <=current_time && et[i]<mn /*&&et[i]>0*/ ){
                     mn=et[i];
                     low=i;
                     flag=true;
@@ -19,12 +19,12 @@ public class SJF {
                 }
             }
             if(!flag){
-                t++;
+                current_time++;
                 continue;
             }
             if(s.length()>0) {
                 o.add(s);
-                if(et[low]>1)t += cost;
+                if(et[low]>1)current_time += cost;
             }
             et[low]--;
             mn = et[low];
@@ -34,12 +34,12 @@ public class SJF {
                 mn = Integer.MAX_VALUE;
                 completed++;
                 flag = false;
-                t+=cost;
-                finish_time = t + 1;
+                current_time+=cost;
+                finish_time = current_time + 1;
                 w[low] = finish_time - (p[low].burst + p[low].arrival);
 
             }
-            t++;
+            current_time++;
         }
     }
     public static void tat(Process p[],int size,int wt[],int tat[]){
