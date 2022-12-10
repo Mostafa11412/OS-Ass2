@@ -13,6 +13,7 @@ public class Ag {
     ArrayList<Integer> burst;
     ArrayList<String> order;
     ArrayList<Integer> waiting;
+    ArrayList<Integer> turn_around;
     Process current_process;
     public Ag(ArrayList<Process> pi,int size){
         current_process=null;
@@ -20,6 +21,7 @@ public class Ag {
         completed=0;
         this.size=size;
         waiting=new ArrayList<>();
+        turn_around=new ArrayList<>();
         order=new ArrayList<>();
         ready=new ArrayList<>();
         arrival=new ArrayList<>();
@@ -82,6 +84,7 @@ public class Ag {
             current_time+=Math.min(current_process.burst,q);
             double oldQuatum=current_process.getQuantum();
             current_process.quantum-=q;
+
             current_process.burst-=Math.min(current_process.burst,q);
             if(current_process.burst<=0){
                 current_process.finish_time=current_time;
@@ -166,18 +169,40 @@ public class Ag {
      
     }
     public void calc(){
+        execute();
+        for (int i=0;i<order.size();i++){
+            System.out.print(order.get(i)+"  ");
+        }
         for (int i=0;i<p.size();i++){
             waiting.add(p.get(i).finish_time-(burst.get(i)+arrival.get(i)));
         }
-    }
-    public void display(){
-        for (int i=0;i<order.size();i++){
-            System.out.print(order.get(i)+" ");
+        for (int i = 0; i < size; i++) {
+            turn_around.add(waiting.get(i)+ burst.get(i));
         }
+
+        float totalWait=0,totalTurn=0;
+
         System.out.println("\n");
-        for (int i=0;i<waiting.size();i++){
-            System.out.println(waiting.get(i)+" ");
+        System.out.println("Processes " +
+                " Burst time " +
+                " Waiting time " +
+                " Turn around time");
+
+        for (int i=0;i<size;i++)
+        {
+            totalWait+=waiting.get(i);
+            totalTurn+=turn_around.get(i);
+
+            System.out.println(" " + p.get(i).pName + "\t\t\t\t "
+                    + burst.get(i) + "\t\t\t " + waiting.get(i)
+                    + "\t\t\t" + turn_around.get(i) + "\n");
         }
+        totalWait=totalWait/size;
+        totalTurn=totalTurn/size;
+        System.out.println("Average waiting time = " +
+                totalWait);
+        System.out.println("Average turn around time = " +
+                totalTurn);
     }
 
 }

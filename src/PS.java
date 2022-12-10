@@ -68,8 +68,8 @@ public class PS {
                 " Turn around time " );
         for (int i = 0 ; i < size ; i++){
             System.out.println(" " + processes[i].pName + "\t\t\t\t"
-                    + x[i] + "\t\t\t\t " + waitingTime[i]
-                    + "\t\t\t\t" + turnAroundTime[i]);
+                    + x[i] + "\t\t\t " + waitingTime[i]
+                    + "\t\t\t" + turnAroundTime[i]);
         }
 
         System.out.println("\n");
