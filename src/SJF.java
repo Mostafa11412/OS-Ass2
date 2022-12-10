@@ -11,7 +11,7 @@ public class SJF {
         while (completed <size){
             String s="";
             for (int i=0;i<size;i++){
-                if(p[i].arrival <=current_time && et[i]<mn /*&&et[i]>0*/ ){
+                if(p[i].arrival <=current_time && et[i]<mn &&et[i]>0){
                     mn=et[i];
                     low=i;
                     flag=true;

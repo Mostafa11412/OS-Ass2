@@ -193,10 +193,11 @@ public class Ag {
             totalWait+=waiting.get(i);
             totalTurn+=turn_around.get(i);
 
-            System.out.println(" " + p.get(i).pName + "\t\t\t\t "
-                    + burst.get(i) + "\t\t\t " + waiting.get(i)
-                    + "\t\t\t" + turn_around.get(i) + "\n");
+            System.out.println(" " + p.get(i).pName + "\t\t\t\t"
+                    + burst.get(i) + "\t\t\t\t " + waiting.get(i)
+                    + "\t\t\t\t" + turn_around.get(i));
         }
+        System.out.println("");
         totalWait=totalWait/size;
         totalTurn=totalTurn/size;
         System.out.println("Average waiting time = " +
