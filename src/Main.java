@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -13,15 +14,21 @@ public class Main {
 //                new Process("p7",7,10),
 //                };
 //        RR.calc(p,p.length,2,0);
-
-        Process p[]={new Process("p1",0,3),
-                new Process("p2",2,5),
-                new Process("p3",1,4),
-                new Process("p4",4,2),
-                new Process("p5",6,9),
-                new Process("p6",5,4),
-                new Process("p7",7,10)};
-        RR.calc(p,p.length,2,0);
+        ArrayList<Process> p=new ArrayList<>();
+        p.add(new Process("p1",0,17,4,7));
+        p.add(new Process("p2",2,6,7,9));
+        p.add(new Process("p3",5,11,3,4));
+        p.add(new Process("p4",15,4,6,6));
+        Ag a=new Ag(p, p.size());
+        a.execute();
+        a.calc();
+        a.display();
+//        Process p[]={new Process("p1",0,4),
+//                new Process("p2",1,8),
+//                new Process("p3",3,2),
+//                new Process("p4",10,6),
+//                new Process("p5",12,5),};
+//        RR.calc(p,p.length,3,0);
                 //int number_of_processes = in.nextInt();
 //
 //                Process p[]={new Process("p1",0,1 , 2),

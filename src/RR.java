@@ -19,9 +19,9 @@ public class RR {
             arrival[i]=p[i].arrival;
         }
         int mx=-1;
-        for (int i=0;i<size;i++){
-            mx=max(mx,p[i].arrival);
-        }
+//        for (int i=0;i<size;i++){
+//            mx=max(mx,p[i].arrival);
+//        }
         int mx1=mx;
         while(completed<size)
         {
