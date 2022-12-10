@@ -15,6 +15,8 @@ public class Ag {
     ArrayList<Integer> waiting;
     ArrayList<Integer> turn_around;
     Process current_process;
+    ArrayList<Double>quantam_Array;
+    ArrayList<ArrayList<Double>>Order_quantam;
     public Ag(ArrayList<Process> pi,int size){
         current_process=null;
         current_time=0;
@@ -27,6 +29,8 @@ public class Ag {
         arrival=new ArrayList<>();
         burst=new ArrayList<>();
         p=new ArrayList<>();
+        quantam_Array = new ArrayList<>();
+        Order_quantam = new ArrayList<>();
         for (int i=0;i<size;i++){
             arrival.add(pi.get(i).arrival);
         }
@@ -35,6 +39,9 @@ public class Ag {
         }
         for (int i=0;i<size;i++){
             this.p.add(pi.get(i));
+        }
+        for (int i=0;i<size;i++){
+            quantam_Array.add(pi.get(i).quantum);
         }
     }
 
@@ -59,6 +66,13 @@ public class Ag {
             }
         }
     }
+
+    public void updateQuantam(){
+        quantam_Array.clear();
+        for (int i =0 ; i<size ; i++){
+            quantam_Array.add(p.get(i).quantum);
+        }
+    }
     public void execute(){
         boolean flag=false;
         while (true){
@@ -77,6 +91,7 @@ public class Ag {
         }
         while (completed<size){
             if(current_process==null){
+//                Order_quantam.add(quantam_Array);
                 current_process=ready.get(0);
                 ready.remove(0);
             }
@@ -90,6 +105,7 @@ public class Ag {
                 current_process.finish_time=current_time;
                 completed++;
                 order.add(current_process.pName);
+                Order_quantam.add(quantam_Array);
                 current_process=null;
                 continue;
             }
@@ -110,6 +126,7 @@ public class Ag {
                 current_process.setQuantum(oldQuatum+Math.ceil(current_process.getQuantum()/2));
                 ready.add(current_process);
                 order.add(current_process.pName);
+                Order_quantam.add(quantam_Array);
                 current_process=readyProcess;
             }else{
                 q =getQuarter(current_process);
@@ -120,6 +137,7 @@ public class Ag {
                     current_process.finish_time=current_time;
                     completed++;
                     order.add(current_process.pName);
+                    Order_quantam.add(quantam_Array);
                     current_process=null;
                     continue;
                 }
@@ -139,6 +157,7 @@ public class Ag {
                     current_process.setQuantum(oldQuatum+Math.ceil(current_process.getQuantum()));
                     ready.add(current_process);
                     order.add(current_process.pName);
+                    Order_quantam.add(quantam_Array);
                     current_process=readyProcess;
                 }else{
                     while (current_process.quantum>0 &&current_process.burst>0){
@@ -152,6 +171,7 @@ public class Ag {
                         current_process.finish_time=current_time;
                         completed++;
                         order.add(current_process.pName);
+                        Order_quantam.add(quantam_Array);
                         current_process=null;
                         continue;
                     }
@@ -159,12 +179,13 @@ public class Ag {
                         current_process.quantum+=2;
                         ready.add(current_process);
                         order.add(current_process.pName);
+                        Order_quantam.add(quantam_Array);
                         current_process=null;
                     }
                 }
 
             }
-
+            updateQuantam();
         }
      
     }
@@ -204,6 +225,14 @@ public class Ag {
                 totalWait);
         System.out.println("Average turn around time = " +
                 totalTurn);
+        for (int i=0;i<Order_quantam.size();i++){
+            for (int j =0;j<Order_quantam.get(i).size();j++){
+                System.out.print(Order_quantam.get(i).get(j));
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+
     }
 
 }
