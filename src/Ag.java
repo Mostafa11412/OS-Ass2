@@ -16,7 +16,6 @@ public class Ag {
     ArrayList<Integer> turn_around;
     Process current_process;
     ArrayList<Double>quantam_Array;
-    ArrayList<ArrayList<Double>>Order_quantam;
     public Ag(ArrayList<Process> pi,int size){
         current_process=null;
         current_time=0;
@@ -30,7 +29,6 @@ public class Ag {
         burst=new ArrayList<>();
         p=new ArrayList<>();
         quantam_Array = new ArrayList<>();
-        Order_quantam = new ArrayList<>();
         for (int i=0;i<size;i++){
             arrival.add(pi.get(i).arrival);
         }
@@ -68,6 +66,10 @@ public class Ag {
     }
 
     public void updateQuantam(){
+        for (int i=0;i<quantam_Array.size();i++){
+            System.out.print(quantam_Array.get(i)+" ");
+        }
+        System.out.println("");
         quantam_Array.clear();
         for (int i =0 ; i<size ; i++){
             quantam_Array.add(p.get(i).quantum);
@@ -91,7 +93,6 @@ public class Ag {
         }
         while (completed<size){
             if(current_process==null){
-//                Order_quantam.add(quantam_Array);
                 current_process=ready.get(0);
                 ready.remove(0);
             }
@@ -103,10 +104,11 @@ public class Ag {
             current_process.burst-=Math.min(current_process.burst,q);
             if(current_process.burst<=0){
                 current_process.finish_time=current_time;
+                current_process.quantum=0;
                 completed++;
                 order.add(current_process.pName);
-                Order_quantam.add(quantam_Array);
                 current_process=null;
+                updateQuantam();
                 continue;
             }
             updateQueue();
@@ -126,7 +128,6 @@ public class Ag {
                 current_process.setQuantum(oldQuatum+Math.ceil(current_process.getQuantum()/2));
                 ready.add(current_process);
                 order.add(current_process.pName);
-                Order_quantam.add(quantam_Array);
                 current_process=readyProcess;
             }else{
                 q =getQuarter(current_process);
@@ -134,11 +135,12 @@ public class Ag {
                 current_process.quantum-=q;
                 current_process.burst-=Math.min(current_process.burst,q);
                 if(current_process.burst<=0){
+                    current_process.quantum=0;
                     current_process.finish_time=current_time;
                     completed++;
                     order.add(current_process.pName);
-                    Order_quantam.add(quantam_Array);
                     current_process=null;
+                    updateQuantam();
                     continue;
                 }
                 updateQueue();
@@ -157,7 +159,6 @@ public class Ag {
                     current_process.setQuantum(oldQuatum+Math.ceil(current_process.getQuantum()));
                     ready.add(current_process);
                     order.add(current_process.pName);
-                    Order_quantam.add(quantam_Array);
                     current_process=readyProcess;
                 }else{
                     while (current_process.quantum>0 &&current_process.burst>0){
@@ -171,15 +172,14 @@ public class Ag {
                         current_process.finish_time=current_time;
                         completed++;
                         order.add(current_process.pName);
-                        Order_quantam.add(quantam_Array);
                         current_process=null;
+                        updateQuantam();
                         continue;
                     }
                     if(current_process.quantum<=0){
                         current_process.quantum+=2;
                         ready.add(current_process);
                         order.add(current_process.pName);
-                        Order_quantam.add(quantam_Array);
                         current_process=null;
                     }
                 }
@@ -191,6 +191,7 @@ public class Ag {
     }
     public void calc(){
         execute();
+        System.out.println("");
         for (int i=0;i<order.size();i++){
             System.out.print(order.get(i)+"  ");
         }
@@ -225,13 +226,13 @@ public class Ag {
                 totalWait);
         System.out.println("Average turn around time = " +
                 totalTurn);
-        for (int i=0;i<Order_quantam.size();i++){
-            for (int j =0;j<Order_quantam.get(i).size();j++){
-                System.out.print(Order_quantam.get(i).get(j));
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
+//        for (int i=0;i<Order_quantam.size();i++){
+//            for (int j =0;j<Order_quantam.get(i).size();j++){
+//                System.out.print(Order_quantam.get(i).get(j));
+//                System.out.print(" ");
+//            }
+//            System.out.println();
+//        }
 
     }
 
