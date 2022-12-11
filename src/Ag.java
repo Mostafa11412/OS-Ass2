@@ -16,7 +16,7 @@ public class Ag {
     ArrayList<Integer> turn_around;
     Process current_process;
     ArrayList<Double>quantam_Array;
-    public Ag(ArrayList<Process> pi,int size){
+    public Ag(Process pi[], int size){
         current_process=null;
         current_time=0;
         completed=0;
@@ -30,16 +30,16 @@ public class Ag {
         p=new ArrayList<>();
         quantam_Array = new ArrayList<>();
         for (int i=0;i<size;i++){
-            arrival.add(pi.get(i).arrival);
+            arrival.add(pi[i].arrival);
         }
         for (int i=0;i<size;i++){
-            burst.add(pi.get(i).burst);
+            burst.add(pi[i].burst);
         }
         for (int i=0;i<size;i++){
-            this.p.add(pi.get(i));
+            this.p.add(pi[i]);
         }
         for (int i=0;i<size;i++){
-            quantam_Array.add(pi.get(i).quantum);
+            quantam_Array.add(pi[i].quantum);
         }
     }
 
@@ -100,7 +100,6 @@ public class Ag {
             current_time+=Math.min(current_process.burst,q);
             double oldQuatum=current_process.getQuantum();
             current_process.quantum-=q;
-
             current_process.burst-=Math.min(current_process.burst,q);
             if(current_process.burst<=0){
                 current_process.finish_time=current_time;
