@@ -66,7 +66,7 @@ public class Ag {
     }
 
     public void updateQuantam(){
-        System.out.print("Quantim ( ");
+        System.out.print("Quantum ( ");
         for (int i=0;i<quantam_Array.size();i++){
             System.out.print(quantam_Array.get(i)+" ");
             if (i<quantam_Array.size()-1)

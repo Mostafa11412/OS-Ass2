@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.println("1-SJF 2-RR 3-PS 4-Ag");
+        System.out.println("1-SJF  2-RR  3-PS  4-Ag");
         int status = in.nextInt();
         switch (status) {
             case 1:
