@@ -226,13 +226,6 @@ public class Ag {
                 totalWait);
         System.out.println("Average turn around time = " +
                 totalTurn);
-//        for (int i=0;i<Order_quantam.size();i++){
-//            for (int j =0;j<Order_quantam.get(i).size();j++){
-//                System.out.print(Order_quantam.get(i).get(j));
-//                System.out.print(" ");
-//            }
-//            System.out.println();
-//        }
 
     }
 
